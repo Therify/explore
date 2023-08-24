@@ -15,6 +15,11 @@ posthog.init(import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY, {
 Sentry.init({
   dsn: 'https://432d48e455fc6e9b67f1318e4a51dc8d@o4505760600883200.ingest.sentry.io/4505760604291072',
   integrations: [
+    new posthog.SentryIntegration(
+      posthog,
+      'therify-c5766a569',
+      4505760604291072
+    ),
     new Sentry.BrowserTracing({
       // Set 'tracePropagationTargets' to control for which URLs distributed tracing should be enabled
       tracePropagationTargets: ['localhost', 'https:yourserver.io/api/'],

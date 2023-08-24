@@ -6,7 +6,9 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/app',
-
+  build: {
+    sourcemap: true,
+  },
   server: {
     port: 4200,
     host: 'localhost',
@@ -21,9 +23,9 @@ export default defineConfig({
     react(),
     nxViteTsPaths(),
     sentryVitePlugin({
-      org: process.env.SENTRY_ORG,
-      project: process.env.SENTRY_PROJECT,
-      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: process.env.NX_SENTRY_ORG,
+      project: process.env.NX_SENTRY_PROJECT,
+      authToken: process.env.NX_SENTRY_AUTH_TOKEN,
     }),
   ],
 
