@@ -5,11 +5,14 @@
   "scripts": {},
   "private": true,
   "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
     "@nx/nest": "^16.7.4",
     "@nx/next": "^16.7.4",
     "@nx/node": "^16.7.4",
     "@nx/react": "^16.7.4",
     "@nx/workspace": "16.7.4",
+    "husky": "^8.0.3",
     "nx": "16.7.4",
     "nx-cloud": "latest"
   }
