@@ -13,9 +13,9 @@ jobs:
         with:
           fetch-depth: 0
       - uses: nrwl/nx-set-shas@v3
-      - run: npm ci
+      - run: pnpm install
 
-      - run: npx nx format:check
-      - run: npx nx affected -t lint --parallel=3
-      - run: npx nx affected -t test --parallel=3 --configuration=ci
-      - run: npx nx affected -t build --parallel=3
+      - run: pnpx nx format:check
+      - run: pnpx nx affected -t lint --parallel=3
+      - run: pnpx nx affected -t test --parallel=3 --configuration=ci
+      - run: pnpx nx affected -t build --parallel=3
