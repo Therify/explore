@@ -18,14 +18,17 @@ function _getProxyConfig(): ProxyConfig {
         changeOrigin: true,
         secure: false,
       };
-    default:
+    default: {
       if (!process.env.NX_API_ENDPOINT)
         throw new Error('Required env var "NX_API_ENDPOINT" not defined');
-      return {
+      const config = {
         target: process.env.NX_API_ENDPOINT,
         changeOrigin: true,
         secure: true,
       };
+      console.info('Configuring proxy for production', { config });
+      return config;
+    }
   }
 }
 
