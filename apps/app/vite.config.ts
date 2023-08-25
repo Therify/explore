@@ -9,9 +9,9 @@ function _getAPIEndpoint(): string {
     case 'development':
       return 'http://localhost:3000';
     default:
-      if (!process.env.API_ENDPOINT)
-        throw new Error('Required env var "API_ENDPOINT" not defined');
-      return process.env.API_ENDPOINT;
+      if (!process.env.NX_API_ENDPOINT)
+        throw new Error('Required env var "NX_API_ENDPOINT" not defined');
+      return process.env.NX_API_ENDPOINT;
   }
 }
 
