@@ -4,6 +4,17 @@ import react from '@vitejs/plugin-react';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
+function _getAPIEndpoint(): string {
+  switch (process.env.NODE_ENV) {
+    case 'development':
+      return 'http://localhost:3000';
+    default:
+      if (!process.env.API_ENDPOINT)
+        throw new Error('Required env var "API_ENDPOINT" not defined');
+      return process.env.API_ENDPOINT;
+  }
+}
+
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/app',
   build: {
@@ -14,7 +25,7 @@ export default defineConfig({
     host: 'localhost',
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: _getAPIEndpoint(),
         changeOrigin: true,
       },
     },
