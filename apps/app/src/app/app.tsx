@@ -8,7 +8,7 @@ export function App() {
   const posthog = usePostHog();
   const flagEnabled = useFeatureFlagEnabled('explode');
   useEffect(() => {
-    fetch(import.meta.env.VITE_API_ENDPOINT + '/api')
+    fetch(`${import.meta.env.VITE_API_ENDPOINT}/api`)
       .then((res) => res.json())
       .then(console.log);
   }, []);
