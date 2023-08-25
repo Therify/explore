@@ -4,34 +4,6 @@ import react from '@vitejs/plugin-react';
 import { sentryVitePlugin } from '@sentry/vite-plugin';
 import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
-interface ProxyConfig {
-  target: string;
-  changeOrigin: boolean;
-  secure: boolean;
-}
-
-function _getProxyConfig(): ProxyConfig {
-  switch (process.env.NODE_ENV) {
-    case 'development':
-      return {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        secure: false,
-      };
-    default: {
-      if (!process.env.NX_API_ENDPOINT)
-        throw new Error('Required env var "NX_API_ENDPOINT" not defined');
-      const config = {
-        target: process.env.NX_API_ENDPOINT,
-        changeOrigin: true,
-        secure: true,
-      };
-      console.info('Configuring proxy for production', { config });
-      return config;
-    }
-  }
-}
-
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/app',
   build: {
@@ -40,11 +12,6 @@ export default defineConfig({
   server: {
     port: 4200,
     host: 'localhost',
-    proxy: {
-      '/api': {
-        ..._getProxyConfig(),
-      },
-    },
   },
 
   preview: {
@@ -66,7 +33,6 @@ export default defineConfig({
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
-
   test: {
     globals: true,
     cache: {
