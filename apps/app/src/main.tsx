@@ -11,7 +11,7 @@ import App from './app/app';
 posthog.init(import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_KEY, {
   api_host: import.meta.env.VITE_REACT_APP_PUBLIC_POSTHOG_HOST,
 });
-
+console.debug('API Endpoint', import.meta.env.VITE_API_ENDPOINT);
 Sentry.init({
   dsn: 'https://432d48e455fc6e9b67f1318e4a51dc8d@o4505760600883200.ingest.sentry.io/4505760604291072',
   integrations: [
