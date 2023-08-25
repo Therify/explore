@@ -7,7 +7,11 @@ import NxWelcome from './nx-welcome';
 export function App() {
   const posthog = usePostHog();
   const flagEnabled = useFeatureFlagEnabled('explode');
-  console.log(flagEnabled);
+  useEffect(() => {
+    fetch('/api')
+      .then((res) => res.json())
+      .then(console.log);
+  }, []);
 
   useEffect(() => {
     if (window.location.hash && window.location.hash.includes('id')) {
