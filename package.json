@@ -6,7 +6,7 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
     "api:serve": "nx run api:serve:production",
-    "api:start": "run-s db:migrate db:generate api:serve"
+    "preapi:serve": "run-s db:migrate db:generate"
   },
   "private": true,
   "devDependencies": {
