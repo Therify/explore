@@ -79,6 +79,7 @@ CREATE TABLE "auth"."flow_state" (
     "provider_refresh_token" TEXT,
     "created_at" TIMESTAMPTZ(6),
     "updated_at" TIMESTAMPTZ(6),
+    "authentication_method" TEXT NOT NULL,
 
     CONSTRAINT "flow_state_pkey" PRIMARY KEY ("id")
 );
@@ -189,7 +190,9 @@ CREATE TABLE "auth"."saml_relay_states" (
 
 -- CreateTable
 CREATE TABLE "auth"."schema_migrations" (
-    "version" VARCHAR(14) NOT NULL
+    "version" VARCHAR(255) NOT NULL,
+
+    CONSTRAINT "schema_migrations_pkey" PRIMARY KEY ("version")
 );
 
 -- CreateTable
@@ -239,6 +242,12 @@ CREATE INDEX "audit_logs_instance_id_idx" ON "auth"."audit_log_entries"("instanc
 CREATE INDEX "idx_auth_code" ON "auth"."flow_state"("auth_code");
 
 -- CreateIndex
+CREATE INDEX "flow_state_created_at_idx" ON "auth"."flow_state"("created_at" DESC);
+
+-- CreateIndex
+CREATE INDEX "idx_user_id_auth_method" ON "auth"."flow_state"("user_id", "authentication_method");
+
+-- CreateIndex
 CREATE INDEX "identities_email_idx" ON "auth"."identities"("email");
 
 -- CreateIndex
@@ -246,6 +255,9 @@ CREATE INDEX "identities_user_id_idx" ON "auth"."identities"("user_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "mfa_amr_claims_session_id_authentication_method_pkey" ON "auth"."mfa_amr_claims"("session_id", "authentication_method");
+
+-- CreateIndex
+CREATE INDEX "mfa_challenge_created_at_idx" ON "auth"."mfa_challenges"("created_at" DESC);
 
 -- CreateIndex
 CREATE INDEX "factor_id_created_at_idx" ON "auth"."mfa_factors"("user_id", "created_at");
@@ -266,7 +278,7 @@ CREATE INDEX "refresh_tokens_parent_idx" ON "auth"."refresh_tokens"("parent");
 CREATE INDEX "refresh_tokens_session_id_revoked_idx" ON "auth"."refresh_tokens"("session_id", "revoked");
 
 -- CreateIndex
-CREATE INDEX "refresh_tokens_token_idx" ON "auth"."refresh_tokens"("token");
+CREATE INDEX "refresh_tokens_updated_at_idx" ON "auth"."refresh_tokens"("updated_at" DESC);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "saml_providers_entity_id_key" ON "auth"."saml_providers"("entity_id");
@@ -281,13 +293,16 @@ CREATE INDEX "saml_relay_states_for_email_idx" ON "auth"."saml_relay_states"("fo
 CREATE INDEX "saml_relay_states_sso_provider_id_idx" ON "auth"."saml_relay_states"("sso_provider_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "schema_migrations_version_idx" ON "auth"."schema_migrations"("version");
+CREATE INDEX "saml_relay_states_created_at_idx" ON "auth"."saml_relay_states"("created_at" DESC);
 
 -- CreateIndex
 CREATE INDEX "sessions_user_id_idx" ON "auth"."sessions"("user_id");
 
 -- CreateIndex
 CREATE INDEX "user_id_created_at_idx" ON "auth"."sessions"("user_id", "created_at");
+
+-- CreateIndex
+CREATE INDEX "sessions_not_after_idx" ON "auth"."sessions"("not_after" DESC);
 
 -- CreateIndex
 CREATE INDEX "sso_domains_sso_provider_id_idx" ON "auth"."sso_domains"("sso_provider_id");
