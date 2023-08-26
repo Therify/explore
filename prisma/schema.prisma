@@ -10,23 +10,7 @@ datasource db {
   schemas   = ["auth", "public"]
 }
 
-model User {
-  id           String   @id @db.Uuid()
-  givenName    String   @map("given_name")
-  surname      String
-  emailAddress String   @unique @map("email_address")
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp()
-  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp()
-
-  user users @relation(fields: [id], references: [id], onDelete: Cascade)
-
-  @@map("users")
-  @@schema("public")
-}
-
-//
-// Supabase Generated
-
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model users {
   instance_id                 String?       @db.Uuid
   id                          String        @id @db.Uuid
@@ -65,7 +49,6 @@ model users {
   identities                  identities[]
   mfa_factors                 mfa_factors[]
   sessions                    sessions[]
-  user                        User[]
 
   @@index([instance_id])
   @@schema("auth")
@@ -238,6 +221,7 @@ model sessions {
   @@schema("auth")
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model sso_domains {
   id              String        @id @db.Uuid
   sso_provider_id String        @db.Uuid
@@ -250,6 +234,7 @@ model sso_domains {
   @@schema("auth")
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model sso_providers {
   id                String              @id @db.Uuid
   resource_id       String?
