@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "db:generate": "prisma generate",
+    "db:push": "prisma db push",
     "db:migrate": "prisma migrate deploy",
     "api:build": "nx run api:build:production",
     "preapi:build": "run-s db:migrate db:generate"
