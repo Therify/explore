@@ -7,7 +7,20 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["auth", "public"]
+  schemas   = ["auth", "public", "storage"]
+}
+
+model User {
+  id           String   @id @db.Uuid()
+  givenName    String   @map("given_name")
+  surname      String   @map("surname")
+  emailAddress String   @unique @map("email_address")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamp()
+  user         users    @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("users")
+  @@schema("public")
 }
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
@@ -49,6 +62,7 @@ model users {
   identities                  identities[]
   mfa_factors                 mfa_factors[]
   sessions                    sessions[]
+  user                        User[]
 
   @@index([instance_id])
   @@schema("auth")
